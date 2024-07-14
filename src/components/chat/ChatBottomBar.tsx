@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import useSound from "use-sound";
 import Image from "next/image";
@@ -26,21 +26,24 @@ import { usePreferences } from "@/store/usePreferences";
 import { useSelectedUser } from "@/store/useSelectedUser";
 import { Message } from "@/db/dummy";
 import { sendMessageAction } from "@/actions/message.actions";
+import { pusherClient } from "@/lib/pusher";
 
 const ChatBottomBar = () => {
   const [message, setMessage] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const { selectedUser } = useSelectedUser();
   const { user: currentUser } = useKindeBrowserClient();
 
   const { soundEnabled } = usePreferences();
   const queryClient = useQueryClient();
-  const [imgUrl, setImgUrl] = useState("");
 
   const [playSound1] = useSound("/sounds/keystroke1.mp3");
   const [playSound2] = useSound("/sounds/keystroke2.mp3");
   const [playSound3] = useSound("/sounds/keystroke3.mp3");
   const [playSound4] = useSound("/sounds/keystroke4.mp3");
+
+  const [playNotificationSound] = useSound("/sounds/notification.mp3");
 
   const playSoundFunctions = [playSound1, playSound2, playSound3, playSound4];
 
@@ -77,6 +80,41 @@ const ChatBottomBar = () => {
       setMessage(message + "\n");
     }
   };
+
+  useEffect(() => {
+    const channelName = `${currentUser?.id}__${selectedUser?.id}`
+      .split("__")
+      .sort()
+      .join("__");
+    const channel = pusherClient?.subscribe(channelName);
+
+    const handleNewMessage = (data: { message: Message }) => {
+      queryClient.setQueryData(
+        ["messages", selectedUser?.id],
+        (oldMessages: Message[]) => {
+          return [...oldMessages, data.message];
+        }
+      );
+
+      if (soundEnabled && data.message.senderId !== currentUser?.id) {
+        playNotificationSound();
+      }
+    };
+
+    channel.bind("newMessage", handleNewMessage);
+
+    // ! Absolutely important, otherwise the event listener will be added multiple times which means you'll see the incoming new message multiple times
+    return () => {
+      channel.unbind("newMessage", handleNewMessage);
+      pusherClient.unsubscribe(channelName);
+    };
+  }, [
+    currentUser?.id,
+    selectedUser?.id,
+    queryClient,
+    playNotificationSound,
+    soundEnabled,
+  ]);
 
   return (
     <div className="p-2 flex justify-between w-full items-center gap-2">

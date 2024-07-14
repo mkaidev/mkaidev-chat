@@ -64,7 +64,7 @@ const MessageList = () => {
                 "flex flex-col gap-2 p-4 whitespace-pre-wrap",
                 message.senderId === currentUser?.id
                   ? "items-end"
-                  : "items-start",
+                  : "items-start"
               )}
             >
               <div className="flex gap-3 items-center">

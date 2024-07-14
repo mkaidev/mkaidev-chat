@@ -45,7 +45,7 @@ const ChatLayout = ({ defaultLayout = [320, 480], users }: ChatLayoutProps) => {
       className="h-full items-stretch bg-background rounded-lg"
       onLayout={(sizes: number[]) => {
         document.cookie = `react-resizable-panels:layout=${JSON.stringify(
-          sizes,
+          sizes
         )}; `;
       }}
     >
@@ -64,7 +64,7 @@ const ChatLayout = ({ defaultLayout = [320, 480], users }: ChatLayoutProps) => {
           document.cookie = `react-resizable-panels:collapsed=false;`;
         }}
         className={cn(
-          isCollapsed && "min-w-[80px] transition-all duration-300 ease-in-out",
+          isCollapsed && "min-w-[80px] transition-all duration-300 ease-in-out"
         )}
       >
         <Sidebar isCollapsed={isCollapsed} users={users} />

@@ -2,13 +2,12 @@ import Image from "next/image";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
 import AuthButtons from "./AuthButtons";
 
 const page = async () => {
   const { isAuthenticated } = getKindeServerSession();
   if (await isAuthenticated()) return redirect("/");
-  
+
   return (
     <div className="flex h-screen w-full">
       <div
@@ -16,9 +15,9 @@ const page = async () => {
       justify-center items-center"
       >
         <img
-          src="/redis-logo.svg"
-          alt="Redis Logo"
-          className="absolute -left-1/4 opacity-25 -bottom-52 lg:scale-125 xl:scale-100 scale-[2]
+          src="/bubbles.svg"
+          alt="Bubbles Logo"
+          className="absolute -left-1/4 opacity-25 -bottom-5 lg:scale-125 xl:scale-100 scale-[2]
         pointer-events-none select-none -z-1"
         />
         <div className="flex flex-col gap-2 px-4 xl:ml-30 text-center md:text-start font-semibold">

@@ -3,7 +3,7 @@ import { LogOut } from "lucide-react";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
-import { User, USERS } from "@/db/dummy";
+import { User } from "@/db/dummy";
 import { ScrollArea } from "./ui/scroll-area";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -78,7 +78,7 @@ const Sidebar = ({ isCollapsed, users }: SidebarProps) => {
               className={cn(
                 "w-full justify-start gap-4 my-1",
                 selectedUser?.email === user.email &&
-                  "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white shrink",
+                  "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white shrink"
               )}
               onClick={() => {
                 soundEnabled && playClickSound();
@@ -97,7 +97,7 @@ const Sidebar = ({ isCollapsed, users }: SidebarProps) => {
                 <span>{user.name}</span>
               </div>
             </Button>
-          ),
+          )
         )}
       </ScrollArea>
 

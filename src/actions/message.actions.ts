@@ -3,6 +3,7 @@
 import { Message } from "@/db/dummy";
 import { redis } from "@/lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { pusherServer } from "@/lib/pusher";
 
 type SendMessageActionArgs = {
   content: string;
@@ -22,7 +23,9 @@ export async function sendMessageAction({
 
   const senderId = user.id;
 
-  const conversationId = `conversation:${[senderId, receiverId].sort().join(":")}`;
+  const conversationId = `conversation:${[senderId, receiverId]
+    .sort()
+    .join(":")}`;
 
   // the issue with this has been explained in the tutorial, we need to sort the ids to make sure the conversation id is always the same
   // john, jane
@@ -49,7 +52,9 @@ export async function sendMessageAction({
   }
 
   // Generate a unique message id
-  const messageId = `message:${Date.now()}:${Math.random().toString(36).substring(2, 9)}`;
+  const messageId = `message:${Date.now()}:${Math.random()
+    .toString(36)
+    .substring(2, 9)}`;
   const timestamp = Date.now();
 
   // Create the message hash
@@ -65,16 +70,27 @@ export async function sendMessageAction({
     member: JSON.stringify(messageId),
   });
 
+  const channelName = `${senderId}__${receiverId}`
+    .split("__")
+    .sort()
+    .join("__");
+
+  await pusherServer?.trigger(channelName, "newMessage", {
+    message: { senderId, content, timestamp, messageType },
+  });
+
   return { success: true, conversationId, messageId };
 }
 
 export async function getMessages(
   selectedUserId: string,
-  currentUserId: string,
+  currentUserId: string
 ) {
   // conversation:kp_87f4a115d5f34587940cdee58885a58b:kp_a6bc2324e26548fcb5c19798f6459814:messages
 
-  const conversationId = `conversation:${[selectedUserId, currentUserId].sort().join(":")}`;
+  const conversationId = `conversation:${[selectedUserId, currentUserId]
+    .sort()
+    .join(":")}`;
   const messageIds = await redis.zrange(`${conversationId}:messages`, 0, -1);
 
   if (messageIds.length === 0) return [];

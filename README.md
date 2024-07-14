@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Mkaidev Chat APP | Build an Extremely Fast Chat App with NextJS, Redis, TailwindCSS, Kinde Auth, Upstash, Cloudinary & Pusher, etc
 
 ## Getting Started
 
@@ -18,19 +18,46 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Environment
 
-## Learn More
+Create .env.local file on root folder and input your own environments
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+KINDE_CLIENT_ID=
+KINDE_CLIENT_SECRET=
+KINDE_ISSUER_URL=
+KINDE_SITE_URL=
+KINDE_POST_LOGOUT_REDIRECT_URL=
+KINDE_POST_LOGIN_REDIRECT_URL=
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+UPSTASH_REDIS_REST_URL=""
+UPSTASH_REDIS_REST_TOKEN=""
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+NEXT_PUBLIC_CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 
-## Deploy on Vercel
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_APP_CLUSTER=
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+NEXT_PUBLIC_PUSHER_APP_KEY=
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+## ⭐DO NOT FORGET TO STAR THIS REPO⭐
+
+---
+
+If you want to learn how to create it please follow below tutorial👇:
+➡ Tutorial Link 💚: [Build an Extremely Fast Chat App with Redis and React | Full Guide 2024](https://www.youtube.com/watch?v=0Kzd4k1YuCA)
+
+### Image#1: login page
+
+![Mkaidev Chat APP](https://res.cloudinary.com/dvvj1cukb/image/upload/e_gen_restore/c_limit,w_750/f_auto/q_auto/tbbzssxhdnebrg5i4csm?_a=BAVFB+DW0)
+
+### Image#2: chat page
+
+![Mkaidev Chat APP](https://res.cloudinary.com/dvvj1cukb/image/upload/e_gen_restore/c_limit,w_750/f_auto/q_auto/eptj9kwdopatb57awm0v?_a=BAVFB+DW0)
